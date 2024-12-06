@@ -1,3 +1,11 @@
+<!-- 
+Alexis Brunner
+Cosc 4345, Section 01
+12/6/24
+Creates a box, a wall, and a directional light source. The light source
+can be moved with WASD keys and arrow keys. It can also be turned
+off with the space bar.
+-->
 <html>
 <style type="text/css">
   canvas { background: red; }
@@ -37,9 +45,6 @@ void main()
 <script>
 window.addEventListener("keydown", keycheck, false);
 
-//TODO: Add keyboard interactivity and allow the light source to move
-//TODO: Make space bar toggle the light on/off
-
 function keycheck(e) {
     //'l' key turns on the guide to show the light position
   if (e.keyCode == "76") {
@@ -73,7 +78,6 @@ function keycheck(e) {
   if (e.keyCode == "40") {
     lightOffsetZ += 10;
   }
-  //TODO: I feel like I wouldn't be happy unless I let it move in the z axis, too hehe
 }
 </script>
 
@@ -94,14 +98,28 @@ var lightOffsetX = 0;
 var lightOffsetZ = 0;
 
 // 3D World coordinate points
-var originalPoints = getCube();
+var cubePoints = getCube();
+var wallPoints = getWall();
 
-var faces = [ [0, 1, 3, 2],
+
+var originalPoints = cubePoints.concat(wallPoints);
+
+
+var faces = [ //Represents the cube
+              [0, 1, 3, 2],
               [5, 4, 6, 7],
               [4, 0, 2, 6],
               [1, 5, 7, 3],
               [2, 3, 7, 6],
               [1, 0, 4, 5],
+
+            //Represents the wall
+            [8, 9, 11, 10],
+            [13, 12, 14, 15],
+            [12, 8, 10, 14],
+            [9, 13, 15, 11],
+            [10, 11, 15, 14],
+            [9, 8, 12, 13]
             ];
 
 window.onload = init;
@@ -129,7 +147,7 @@ function render()
    var pref = [0.0, 0.0, 0.0, 1.0];
    var zvp = -400;
  
-   //var lightPositions = [ [1000.0-(offset*4), 500.0, 0.0, 1] ];
+   //TODO: Figure out how to do the shadow
    var lightPositions = [[1000.0 + lightOffsetX, 500.0 + lightOffsetY, lightOffsetZ, 1]];
    var lightDirections = [ [0.0, 0.0, 0.0, 1] ];
    var surfaceEmission = 0.0;
