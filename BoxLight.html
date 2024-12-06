@@ -55,7 +55,6 @@ function keycheck(e) {
   }
   //if 'a' key is pressed, move the light source left
   if (e.keyCode == "65") {
-    //lightOffsetZ -=10;
     lightOffsetX -=10;
   }
   //if 's' key is pressed, move the light source down
@@ -64,8 +63,15 @@ function keycheck(e) {
   }
   //if 'd' key is pressed, move the light source right
   if (e.keyCode == "68") {
-    //lightOffsetZ += 10;
     lightOffsetX += 10;
+  }
+  //if 'up arrow' is pressed, move the light source forward
+  if (e.keyCode == "38") {
+    lightOffsetZ -= 10;
+  }
+  //if 'down arrow' is pressed, move the light source back
+  if (e.keyCode == "40") {
+    lightOffsetZ += 10;
   }
   //TODO: I feel like I wouldn't be happy unless I let it move in the z axis, too hehe
 }
@@ -124,7 +130,7 @@ function render()
    var zvp = -400;
  
    //var lightPositions = [ [1000.0-(offset*4), 500.0, 0.0, 1] ];
-   var lightPositions = [[1000.0 + lightOffsetX, 500.0 + lightOffsetY, 0, 1]];
+   var lightPositions = [[1000.0 + lightOffsetX, 500.0 + lightOffsetY, lightOffsetZ, 1]];
    var lightDirections = [ [0.0, 0.0, 0.0, 1] ];
    var surfaceEmission = 0.0;
 
